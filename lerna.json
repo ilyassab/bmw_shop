@@ -1,0 +1,15 @@
+{
+  "lerna": "3.22.1",
+  "packages": ["frontend/**/*", "backend/**/*"],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "independent",
+  "command": {
+    "version": {
+      "allowBranch": "dev",
+      "conventionalCommits": true,
+      "exact": true,
+      "message": "chore(release): %s"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@fragments/cart",
+  "version": "0.0.36",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/layout": "0.3.0",
+    "@atlantis-lab/modal": "0.3.3",
+    "@fragments/cart-list": "0.0.36",
+    "@fragments/cart-price-block": "0.63.33",
+    "@fragments/how-to": "0.91.0",
+    "react": "^16.13.1"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "@store/actions",
+  "version": "0.91.0",
+  "license": "MIT",
+  "main": "src/index.ts"
+}

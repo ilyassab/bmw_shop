@@ -1,0 +1,18 @@
+{
+  "name": "@ui/zoom-modal",
+  "version": "0.0.5",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/layout": "0.3.0",
+    "@atlantis-lab/modal": "0.3.3",
+    "@emotion/styled": "10.0.27",
+    "@ui/background": "0.97.0",
+    "@ui/condition": "0.91.0",
+    "@ui/cross": "0.0.61",
+    "@ui/icons": "0.97.0",
+    "@ui/no-scrollbar": "0.91.0",
+    "react": "^16.13.1",
+    "styled-system": "5.1.5"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@site/registration-page",
+  "version": "0.0.45",
+  "license": "MIT",
+  "main": "src/index.tsx",
+  "dependencies": {
+    "@fragments/registration": "0.0.45",
+    "react": "^16.13.1",
+    "react-helmet": "^6.1.0",
+    "react-intl": "5.3.2",
+    "react-share": "^4.2.0"
+  }
+}

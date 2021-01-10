@@ -1,0 +1,12 @@
+/node_modules
+/**/**/node_modules
+/site/app/dist
+/*.log
+**/dist
+/dist-zip
+/.idea
+/.vscode
+.DS_Store
+.next
+letsencrypt
+schema.gql

@@ -1,0 +1,10 @@
+{
+  "name": "@fragments/price-slider",
+  "version": "0.0.5",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@ui/slider": "0.0.5",
+    "react": "^16.13.1"
+  }
+}

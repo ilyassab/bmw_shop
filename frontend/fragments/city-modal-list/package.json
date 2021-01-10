@@ -1,0 +1,13 @@
+{
+  "name": "@fragments/city-modal-list",
+  "version": "0.97.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/layout": "^0.3.0",
+    "@fragments/city-modal-item": "0.97.0",
+    "@ui/no-scrollbar": "0.91.0",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

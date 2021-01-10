@@ -1,0 +1,12 @@
+{
+  "name": "@ui/button-loader",
+  "version": "0.0.36",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@emotion/core": "10.0.35",
+    "@emotion/styled": "^10.0.27",
+    "@ui/icons": "0.97.0",
+    "react": "^16.13.1"
+  }
+}

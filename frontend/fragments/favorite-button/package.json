@@ -1,0 +1,19 @@
+{
+  "name": "@fragments/favorite-button",
+  "version": "0.0.5",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@apollo/react-hooks": "3.1.5",
+    "@store/stores": "0.91.0",
+    "@ui/button": "0.0.89",
+    "@ui/condition": "0.91.0",
+    "@ui/favorite": "0.0.5",
+    "@ui/transition": "0.0.76",
+    "@utils/cookie-storage": "0.38.0",
+    "graphql-tag": "^2.10.3",
+    "next": "9.5.3",
+    "react": "^16.8.0",
+    "react-intl": "5.3.2"
+  }
+}

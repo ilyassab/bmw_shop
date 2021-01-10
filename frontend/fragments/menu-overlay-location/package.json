@@ -1,0 +1,18 @@
+{
+  "name": "@fragments/menu-overlay-location",
+  "version": "0.97.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@atlantis-lab/layout": "^0.3.0",
+    "@fragments/city-modal": "0.97.0",
+    "@store/stores": "0.91.0",
+    "@ui/divider": "0.91.0",
+    "@ui/icons": "0.97.0",
+    "@ui/text": "0.98.0",
+    "graphql-tag": "^2.10.3",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

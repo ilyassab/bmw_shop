@@ -1,0 +1,3 @@
+{
+  "extends": "@monstrs/tsconfig/tsconfig.lib.json"
+}

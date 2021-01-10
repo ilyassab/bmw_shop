@@ -1,0 +1,12 @@
+{
+  "name": "@ui/text",
+  "version": "0.98.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@emotion/styled": "^10.0.27",
+    "react": "^16.13.1",
+    "styled-system": "^5.1.5",
+    "styled-tools": "^1.7.1"
+  }
+}

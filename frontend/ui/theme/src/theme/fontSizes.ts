@@ -1,0 +1,17 @@
+export const fontSizes = {
+  tiny: '9px',
+  semiSmall: '10px',
+  small: '12px',
+  semiMedium: '14px',
+  medium: '16px',
+  default: '18px',
+  xmedium: '19px',
+  lmedium: '20px',
+  xlmedium: '22px',
+  average: '24px',
+  semiLarge: '25px',
+  preLarge: '32px',
+  large: '40px',
+  xlarge: '52px',
+  huge: '64px',
+}

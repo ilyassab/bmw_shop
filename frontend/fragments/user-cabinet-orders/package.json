@@ -1,0 +1,21 @@
+{
+  "name": "@fragments/user-cabinet-orders",
+  "version": "0.0.18",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@atlantis-lab/layout": "0.3.0",
+    "@fragments/user-cabinet-order": "0.0.18",
+    "@ui/button": "0.0.89",
+    "@ui/condition": "0.91.0",
+    "@ui/divider": "0.91.0",
+    "@ui/input": "0.97.0",
+    "@ui/loader": "0.92.0",
+    "@ui/text": "0.98.0",
+    "@utils/cookie-storage": "0.38.0",
+    "graphql-tag": "^2.10.3",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

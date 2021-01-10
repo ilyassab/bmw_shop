@@ -1,0 +1,16 @@
+{
+  "name": "@ui/blocks",
+  "version": "0.98.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "devDependencies": {
+    "@atlantis-lab/layout": "0.3.0",
+    "@emotion/styled": "10.0.27",
+    "@ui/background": "0.97.0",
+    "@ui/condition": "0.91.0",
+    "@ui/link": "0.92.0",
+    "@ui/text": "0.98.0",
+    "react": "16.13.1",
+    "styled-system": "5.1.5"
+  }
+}

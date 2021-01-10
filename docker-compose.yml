@@ -1,0 +1,94 @@
+version: '3.7'
+
+services:
+  traefik:
+    image: atlantislab/traefik:bmw-shop
+    command: --api --docker
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      default:
+        aliases:
+          - traefik-bmw
+      traefik:
+        ipv4_address: 172.16.111.99
+
+  yarn:
+    image: node:alpine
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+      - modules:/workspace/node_modules
+      - yarncache:/workspace/.yarn-cache
+    environment:
+      - YARN_CACHE_FOLDER=/workspace/.yarn-cache
+    entrypoint: yarn
+
+  site:
+    image: node:alpine
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+      - modules:/workspace/node_modules
+    entrypoint: yarn site:dev
+    environment:
+      - PUBLIC_GATEWAY_URL=${PUBLIC_GATEWAY_URL}
+    depends_on:
+      - traefik
+    networks:
+      - default
+      - traefik
+
+  site-local:
+    image: node:alpine
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+      - modules:/workspace/node_modules
+    entrypoint: yarn site:dev
+    environment:
+      - PUBLIC_GATEWAY_URL=${PUBLIC_GATEWAY_URL}
+    labels:
+      - 'traefik.frontend.rule=Host:bmw.shop.aunited.dev'
+      - 'traefik.protocol=http'
+      - 'traefik.port=3000'
+    depends_on:
+      - traefik
+    networks:
+      - default
+      - traefik
+
+  public-gateway:
+    image: node:alpine
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+      - modules:/workspace/node_modules
+    entrypoint: yarn public-gateway:dev
+    environment:
+      - REST_GATEWAY_URL=${REST_GATEWAY_URL}
+      - SERVER_PORT=8080
+    labels:
+      - 'traefik.frontend.rule=Host:gateway.bmw.shop.aunited.dev'
+      - 'traefik.protocol=http'
+      - 'traefik.port=8080'
+    depends_on:
+      - traefik
+    networks:
+      - default
+      - traefik
+
+volumes:
+  modules:
+  yarncache:
+
+networks:
+  traefik:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.111.0/24

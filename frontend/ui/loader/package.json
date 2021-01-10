@@ -1,0 +1,10 @@
+{
+  "name": "@ui/loader",
+  "version": "0.92.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@emotion/core": "10.0.35",
+    "@emotion/styled": "^10.0.27"
+  }
+}

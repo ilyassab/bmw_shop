@@ -1,0 +1,14 @@
+{
+  "name": "@fragments/mega-menu-item",
+  "version": "0.91.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/layout": "^0.3.0",
+    "@ui/condition": "0.91.0",
+    "@ui/link": "0.92.0",
+    "@utils/unique": "0.91.0",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

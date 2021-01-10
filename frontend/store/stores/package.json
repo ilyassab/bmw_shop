@@ -1,0 +1,10 @@
+{
+  "name": "@store/stores",
+  "version": "0.91.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@store/actions": "0.91.0",
+    "react": "^16.13.1"
+  }
+}

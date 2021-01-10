@@ -1,0 +1,17 @@
+{
+  "name": "@site/not-found-page",
+  "version": "0.97.0",
+  "license": "MIT",
+  "main": "src/index.tsx",
+  "dependencies": {
+    "@atlantis-lab/button": "^1.5.0",
+    "@fragments/footer": "0.91.0",
+    "@fragments/how-to": "0.91.0",
+    "@fragments/navigation": "0.98.0",
+    "@fragments/top-navigation": "0.97.0",
+    "@ui/not-found-stub": "0.97.0",
+    "react": "^16.13.1",
+    "react-helmet": "^6.1.0",
+    "react-intl": "5.3.2"
+  }
+}

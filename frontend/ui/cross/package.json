@@ -1,0 +1,14 @@
+{
+  "name": "@ui/cross",
+  "version": "0.0.61",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@emotion/styled": "^10.0.27",
+    "@ui/icons": "0.97.0",
+    "@ui/icons-manager": "0.0.79",
+    "react": "^16.13.1",
+    "styled-system": "^5.0.6",
+    "styled-tools": "^1.7.2"
+  }
+}

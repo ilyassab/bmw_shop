@@ -1,0 +1,15 @@
+{
+  "name": "@fragments/top-bar-list",
+  "version": "0.91.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@atlantis-lab/layout": "^0.3.0",
+    "@store/stores": "0.91.0",
+    "@ui/condition": "0.91.0",
+    "@ui/link": "0.92.0",
+    "graphql-tag": "^2.10.3",
+    "react": "^16.13.1"
+  }
+}

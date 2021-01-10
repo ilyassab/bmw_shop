@@ -1,0 +1,12 @@
+{
+  "name": "@ui/icons-manager",
+  "version": "0.0.79",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/icons-manager": "^0.6.0",
+    "@ui/theme": "0.98.0",
+    "@ui/transition": "0.0.76",
+    "react": "^16.13.1"
+  }
+}

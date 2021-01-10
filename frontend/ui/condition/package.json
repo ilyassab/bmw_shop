@@ -1,0 +1,9 @@
+{
+  "name": "@ui/condition",
+  "version": "0.91.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "react": "^16.13.1"
+  }
+}

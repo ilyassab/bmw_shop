@@ -1,0 +1,8 @@
+{
+  "extends": "@monstrs/tsconfig/tsconfig.app.json",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  }
+}

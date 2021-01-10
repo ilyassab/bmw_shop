@@ -1,0 +1,14 @@
+{
+  "name": "@ui/slider",
+  "version": "0.0.5",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/layout": "0.3.0",
+    "@ui/input": "0.97.0",
+    "@ui/text": "0.98.0",
+    "@ui/transition": "0.0.76",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

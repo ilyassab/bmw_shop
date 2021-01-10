@@ -1,0 +1,12 @@
+{
+  "name": "@ui/favorite",
+  "version": "0.0.5",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@emotion/core": "10.0.35",
+    "@ui/icons": "0.97.0",
+    "@ui/transition": "0.0.76",
+    "react": "^16.13.1"
+  }
+}

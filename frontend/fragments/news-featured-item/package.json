@@ -1,0 +1,17 @@
+{
+  "name": "@fragments/news-featured-item",
+  "version": "0.98.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@atlantis-lab/layout": "^0.3.0",
+    "@ui/background": "0.97.0",
+    "@ui/link": "0.92.0",
+    "@ui/post-info": "0.92.0",
+    "@ui/text": "0.98.0",
+    "graphql-tag": "^2.10.3",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

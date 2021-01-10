@@ -1,0 +1,13 @@
+{
+  "name": "@site/password-recovery-page",
+  "version": "0.0.37",
+  "license": "MIT",
+  "main": "src/index.tsx",
+  "dependencies": {
+    "@fragments/password-recovery": "0.0.37",
+    "react": "^16.13.1",
+    "react-helmet": "^6.1.0",
+    "react-intl": "5.3.2",
+    "react-share": "^4.2.0"
+  }
+}

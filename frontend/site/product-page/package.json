@@ -1,0 +1,16 @@
+{
+  "name": "@site/product-page",
+  "version": "0.0.39",
+  "license": "MIT",
+  "main": "src/index.tsx",
+  "dependencies": {
+    "@fragments/footer": "0.91.0",
+    "@fragments/navigation": "0.98.0",
+    "@fragments/product": "0.0.39",
+    "@fragments/top-navigation": "0.97.0",
+    "react": "^16.13.1",
+    "react-helmet": "^6.1.0",
+    "react-intl": "5.3.2",
+    "react-share": "^4.2.0"
+  }
+}

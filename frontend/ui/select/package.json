@@ -1,0 +1,24 @@
+{
+  "name": "@ui/select",
+  "version": "0.50.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "peerDependencies": {
+    "@emotion/styled": "^10.0.9",
+    "react": "^16.8.6"
+  },
+  "dependencies": {
+    "@atlantis-lab/input": "0.5.2",
+    "@atlantis-lab/layout": "0.3.0",
+    "@ui/condition": "0.91.0",
+    "@ui/divider": "0.91.0",
+    "@ui/icons": "0.97.0",
+    "@ui/live-typing": "0.86.0",
+    "@ui/text": "0.98.0",
+    "@ui/transition": "0.0.76",
+    "react-intl": "5.3.2",
+    "react-onclickoutside": "^6.9.0",
+    "recompose": "^0.30.0",
+    "styled-system": "^5.1.5"
+  }
+}

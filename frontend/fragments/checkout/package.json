@@ -1,0 +1,13 @@
+{
+  "name": "@fragments/checkout",
+  "version": "0.0.33",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/layout": "0.3.0",
+    "@fragments/checkout-main": "0.0.31",
+    "@fragments/checkout-price-block": "0.0.31",
+    "@fragments/how-to": "0.91.0",
+    "react": "^16.13.1"
+  }
+}

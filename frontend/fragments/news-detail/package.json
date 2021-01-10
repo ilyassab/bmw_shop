@@ -1,0 +1,26 @@
+{
+  "name": "@fragments/news-detail",
+  "version": "0.91.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@atlantis-lab/layout": "^0.3.0",
+    "@fragments/book-test-drive": "0.91.0",
+    "@fragments/news-grid": "0.92.0",
+    "@store/stores": "0.91.0",
+    "@ui/background": "0.97.0",
+    "@ui/blocks": "0.98.0",
+    "@ui/breadcrumbs": "0.92.0",
+    "@ui/condition": "0.91.0",
+    "@ui/divider": "0.91.0",
+    "@ui/icons": "0.97.0",
+    "@ui/link": "0.92.0",
+    "@ui/post-info": "0.92.0",
+    "@ui/text": "0.98.0",
+    "graphql-tag": "^2.10.3",
+    "next": "^9.4.4",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

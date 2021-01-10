@@ -1,0 +1,16 @@
+{
+  "name": "@fragments/news",
+  "version": "0.91.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/layout": "^0.3.0",
+    "@fragments/news-featured-item": "0.98.0",
+    "@fragments/news-grid": "0.92.0",
+    "@ui/breadcrumbs": "0.92.0",
+    "@ui/divider": "0.91.0",
+    "@ui/text": "0.98.0",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

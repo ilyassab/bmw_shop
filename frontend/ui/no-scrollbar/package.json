@@ -1,0 +1,10 @@
+{
+  "name": "@ui/no-scrollbar",
+  "version": "0.91.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/layout": "^0.3.0",
+    "@emotion/styled": "^10.0.27"
+  }
+}

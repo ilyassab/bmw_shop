@@ -1,0 +1,18 @@
+export const shadows = {
+  gray: '0 20px 60px rgba(59, 59, 59, 0.12)',
+  semiGray: '0 24px 80px rgba(0,0,0,0.16)',
+  lightGray: '0px 20px 40px rgba(59,59,59,0.05)',
+  controls: '0px 16px 60px rgba(59, 59, 59, 0.2)',
+  woodsmoke: '0 8px 40px rgba(59,59,59,0.35)',
+  boxGray: '0px -10px 40px rgba(59, 59, 59, 0.08)',
+  navigationShadow: '0px 20px 40px rgba(38, 38, 38, 0.05)',
+  motionGray: '0px 20px 60px rgba(59, 59, 59, 0.1)',
+  howToDefault: '0px 24px 64px rgba(59, 59, 59, 0.06)',
+  authShadow: '0px 24px 80px rgba(59, 59, 59, 0.06)',
+  howToHovered: '0px 24px 80px rgba(59, 59, 59, 0.16)',
+  catModalHover: '0px -14px 60px rgba(59, 59, 59, 0.08)',
+  categoryHovered: '0px 16px 80px rgba(59, 59, 59, 0.16)',
+  cartNotifyShadow: '0px -4px 24px rgba(38, 38, 38, 0.12)',
+  googleShadow: '0px 10px 60px rgba(59, 59, 59, 0.12)',
+  menuShadow: '0px 14px 40px rgba(59, 59, 59, 0.08)',
+}

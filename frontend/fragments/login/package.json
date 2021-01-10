@@ -1,0 +1,13 @@
+{
+  "name": "@fragments/login",
+  "version": "0.0.45",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/layout": "^0.3.0",
+    "@fragments/auth-navigation": "0.45.0",
+    "@fragments/login-block": "0.45.0",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

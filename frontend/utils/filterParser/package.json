@@ -1,0 +1,10 @@
+{
+  "name": "@utils/filter-parser",
+  "version": "0.0.9",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "next": "9.5.3",
+    "url-parse": "1.4.7"
+  }
+}

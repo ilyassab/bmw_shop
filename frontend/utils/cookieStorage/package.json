@@ -1,0 +1,9 @@
+{
+  "name": "@utils/cookie-storage",
+  "version": "0.38.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "cookie-storage": "6.1.0"
+  }
+}

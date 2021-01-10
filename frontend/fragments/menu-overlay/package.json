@@ -1,0 +1,25 @@
+{
+  "name": "@fragments/menu-overlay",
+  "version": "0.97.0",
+  "license": "MIT",
+  "main": "src/index.tsx",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@atlantis-lab/layout": "^0.3.0",
+    "@atlantis-lab/modal": "0.3.3",
+    "@fragments/menu-overlay-category": "0.97.0",
+    "@fragments/menu-overlay-location": "0.97.0",
+    "@fragments/menu-overlay-navigation": "0.97.0",
+    "@fragments/search": "0.97.0",
+    "@fragments/search-input": "0.54.41",
+    "@ui/button": "0.0.89",
+    "@ui/condition": "0.91.0",
+    "@ui/icons": "0.97.0",
+    "@ui/link": "0.92.0",
+    "@ui/text": "0.98.0",
+    "@utils/cookie-storage": "0.38.0",
+    "graphql-tag": "^2.10.3",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

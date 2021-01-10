@@ -1,0 +1,19 @@
+{
+  "name": "@fragments/slider",
+  "version": "0.92.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "@atlantis-lab/carousel": "0.5.4",
+    "@atlantis-lab/layout": "^0.3.0",
+    "@fragments/slider-item": "0.97.0",
+    "@ui/condition": "0.91.0",
+    "@ui/icons": "0.97.0",
+    "@ui/link": "0.92.0",
+    "@ui/loader": "0.92.0",
+    "@ui/text": "0.98.0",
+    "graphql-tag": "^2.10.3",
+    "react": "^16.13.1"
+  }
+}

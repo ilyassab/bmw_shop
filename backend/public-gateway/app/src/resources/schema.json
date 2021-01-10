@@ -1,0 +1,5743 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Swagger BMW SHOP",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bmw.shop.ta.hmns.ru/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "Everything about User account"
+    },
+    {
+      "name": "static",
+      "description": "Static responses"
+    },
+    {
+      "name": "catalog",
+      "description": "Methods working with catalog"
+    },
+    {
+      "name": "eshop",
+      "description": "Методы интернет-магазина"
+    }
+  ],
+  "paths": {
+    "/users/register/": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Регистрация нового пользователя",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-basket-id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Пользователь зарегистрирован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Не заполнены все поля",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/auth/": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Авторизация",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-basket-id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthObject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ответ в случае успешной авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout/": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Выход",
+        "responses": {
+          "200": {
+            "description": "Разавторизирован",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ]
+      }
+    },
+    "/users/restore/": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Восстановить пароль",
+        "responses": {
+          "200": {
+            "description": "Новый пароль отправлен на почту",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Почта не найдена или не передана",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@example.com"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/password/": {
+      "put": {
+        "tags": ["user"],
+        "summary": "Сменить пароль",
+        "responses": {
+          "200": {
+            "description": "Пароль изменен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/password"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ]
+      }
+    },
+    "/users/notifications/": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Получить уведомления",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Получаем уведомления",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notifications"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Неверные данные для входа",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["user"],
+        "summary": "Записать уведомления",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Notifications"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Получаем настройки уведомлений пользователя",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notifications"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Неверные данные для входа",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/profile/": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Получаем данные пользователя",
+        "responses": {
+          "200": {
+            "description": "Получаем данные пользователя",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Не заполнены обязательные поля",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Неверные данные для входа",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["user"],
+        "summary": "Обновляем данные пользователя",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Возвращает обновлённые данные пользователя",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Не заполнены обязательные поля",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Неверные данные для входа",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": []
+          }
+        ]
+      }
+    },
+    "/car/": {
+      "get": {
+        "summary": "Получить мои автомобили",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["user"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список моих автомобилей",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cars"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Добавить автомобиль",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["user"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Возвращает обновлённый список моих автомобилей",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cars"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/car/{id}/": {
+      "get": {
+        "summary": "Получить автомобиль",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["user"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает обновлённый список моих автомобилей",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cars"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Обновить автомобиль",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["user"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Возвращает обновлённый список моих автомобилей",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cars"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Удалить автомобиль",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["user"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает обновлённый список моих автомобилей",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cars"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carfilter/": {
+      "get": {
+        "summary": "Получение фильтра по параметрам авто",
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "serie",
+            "required": true,
+            "example": "5 серия",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "body",
+            "required": true,
+            "example": "F10 Седан до 01/17 (LCI)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "model",
+            "required": true,
+            "example": "530dx",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает актуальный фильтр по выбранной модели",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "example": "PROPERTY_CAR_MODEL_VALUE"
+                      },
+                      "value": {
+                        "type": "string",
+                        "example": "530d"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carfilter/carcase/": {
+      "get": {
+        "summary": "Получение фильтра по параметрам авто",
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "serie",
+            "required": true,
+            "example": "5 серия",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "body",
+            "required": true,
+            "example": "F10 Седан до 01/17 (LCI)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает актуальный фильтр по выбранной модели",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "example": "PROPERTY_CAR_SERIES_VALUE"
+                      },
+                      "value": {
+                        "type": "string",
+                        "example": "F90"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carfilter/series/": {
+      "get": {
+        "summary": "Возвращает полный список серий",
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает полный список серий авто",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "1 серия"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carfilter/bodies/": {
+      "get": {
+        "summary": "Возвращает полный список кузовов для серии",
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "serie",
+            "required": true,
+            "example": "5 серия",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает полный список кузовов для серии",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "F10 Седан до 01/17 (LCI)"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carfilter/models/": {
+      "get": {
+        "summary": "Возвращает полный список моделей для кузова и серии",
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "serie",
+            "required": true,
+            "example": "5 серия",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "body",
+            "required": true,
+            "example": "F10 Седан до 01/17 (LCI)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает полный список моделей для кузова и серии",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "520d"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carfilter/mcode/": {
+      "get": {
+        "summary": "Возвращает данные для предуставки фильтра и сам фильтр по маркетинговому коду",
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "mcode",
+            "required": true,
+            "example": "1A39",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает данные для предуставки фильтра и сам фильтр по маркетинговому коду",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "selected": {
+                      "type": "object",
+                      "properties": {
+                        "serie": {
+                          "type": "string",
+                          "example": "1 серия"
+                        },
+                        "body": {
+                          "type": "string",
+                          "example": "F20 5-дверей до 02/15"
+                        },
+                        "model": {
+                          "type": "string",
+                          "example": "118i"
+                        }
+                      }
+                    },
+                    "filter": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "example": "PROPERTY_CAR_SERIES_VALUE"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "F20"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/handbook/": {
+      "get": {
+        "summary": "Получить константы для шаблона",
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает справочник с константами шаблона",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HandbookList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dealers/": {
+      "get": {
+        "summary": "Получить всех дилеров",
+        "tags": ["user"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список всех дилеров",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Store"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/": {
+      "get": {
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список страниц",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pages"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/{id-or-slug}": {
+      "get": {
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id-or-slug",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает страницу",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Прочие ошибки",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Странциа не найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FourOFourObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/banners/": {
+      "get": {
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список всех баннеров. ключ group - код группы баннеров https://yadi.sk/i/0CIDDZ2Y-jupWg",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BannerGroups"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Прочие ошибки",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/banners/{code}": {
+      "get": {
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список всех баннеров для выбранного набора баннеров с кодом code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Banners"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Прочие ошибки",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/menu/": {
+      "get": {
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает меню для сайта. Объекты первог уровня - это меню. Объекты - второго, третьего и так далее - пункты и подпункты. Path задаётся вручную в админке и может быть ссылкой на любой раздел сайта.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Menus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/menu/{code}": {
+      "get": {
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["top", "main", "footer"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает меню по его коду.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Menu"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news/": {
+      "get": {
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список новостей для сайта",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/News"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news/{id}": {
+      "get": {
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список новостей для сайта",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewsItemFull"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Прочие ошибки",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Странциа не найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FourOFourObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news/featured": {
+      "get": {
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список новостей для сайта",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewsItemFull"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Прочие ошибки",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Странциа не найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FourOFourObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/": {
+      "get": {
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "query",
+            "name": "iblock",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Iblock"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список категорий инфоблока c подкатегориями",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Categories"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{code}": {
+      "get": {
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "example": "m_performance",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "iblock",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Iblock"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список категорий инфоблока c подкатегориями",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Categories"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/": {
+      "get": {
+        "tags": ["catalog"],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-city",
+            "schema": {
+              "$ref": "#/components/schemas/XCity"
+            }
+          },
+          {
+            "in": "query",
+            "name": "iblock",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Iblock"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dealer[]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortOrder",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "mcode",
+            "description": "Маркетинговый код модели",
+            "schema": {
+              "type": "string",
+              "example": "1A39"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "json-строка следующего формата: <br />\n[{key: PROPERTY_COLOR_VALUE, value: [синий, красный]}, ... ]<br />\nДля цены value: [0, 10000] - диапазон<br />\n# Старый способ передачи фильтра<br />\n#Передаём объект { key: value }. Key и Value берём из значение, которые возвращает filter.\"<br />\n#Value может быть: (1) строкой, если фильтрация по 1 параметру, (2) массивом из 2 элементв для диапазона по цене и (3) массивом элементов, если фильтрация по несколькоим параметрам. делаеть 2 и 3 сваггер не умеет.<br />\n#Пример сериализованной строки: filter[price][0]=0&filter[price][1]=1000&filter[SIZE]=XL\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список товаров",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{id-or-slug}/": {
+      "get": {
+        "description": "Возвращает товар по id или слагу",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["catalog"],
+        "responses": {
+          "200": {
+            "description": "Возвращает товар",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductFull"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Не передан айди или слаг",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Странциа не найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FourOFourObject"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id-or-slug",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-city",
+            "schema": {
+              "$ref": "#/components/schemas/XCity"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dealer[]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/new_products/": {
+      "get": {
+        "description": "Возвращает товары с флагом \"Новинка\"",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-city",
+            "schema": {
+              "$ref": "#/components/schemas/XCity"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortOrder",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает товары с флагом \"Новинка\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Товары не найдены",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Странциа не найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FourOFourObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/filter/": {
+      "get": {
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "iblock",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Iblock"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "json-строка следующего формата: <br />\n[{key: PROPERTY_COLOR_VALUE, value: [синий, красный]}, ... ]<br />\nДля цены value: [0, 10000] - диапазон<br />\n# Старый способ передачи фильтра<br />\n#Передаём объект { key: value }. Key и Value берём из значение, которые возвращает filter.\"<br />\n#Value может быть: (1) строкой, если фильтрация по 1 параметру, (2) массивом из 2 элементв для диапазона по цене и (3) массивом элементов, если фильтрация по несколькоим параметрам. делаеть 2 и 3 сваггер не умеет.<br />\n#Пример сериализованной строки: filter[price][0]=0&filter[price][1]=1000&filter[SIZE]=XL\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список полей для фильтра. Пример ответа https://red.madex.pro/projects/shop/wiki/%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Filter"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/searching/": {
+      "get": {
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "query",
+            "name": "search_string",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "Футболка"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dealer[]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortOrder",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает найденные товары",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifyme/": {
+      "post": {
+        "summary": "Создать уведомление на email для товара",
+        "tags": ["eshop"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 67738
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "madex@yandex.ru"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Возвращает найденные товары",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessObject"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/geolocation/": {
+      "get": {
+        "summary": "Получить местоположение по IP",
+        "tags": ["eshop"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "ip",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "местоположение",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Москва"
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "0000073738"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Не удалось определить гепозицию",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delivery/locations/": {
+      "get": {
+        "summary": "Получить список метоположений доставки",
+        "tags": ["eshop"],
+        "responses": {
+          "200": {
+            "description": "Список местоположений",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Locations"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delivery/": {
+      "get": {
+        "summary": "Получить список доступных служб доставок",
+        "tags": ["eshop"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-city",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/XCity"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-basket-id",
+            "description": "Id корзины (если не передан токен пользователя)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dealer[]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список доступных доставок для метополжения",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeliveryServices"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delivery/{id}": {
+      "get": {
+        "summary": "Расчёт стоимости доставки",
+        "tags": ["eshop"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Выбранный способ доставки",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-city",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/XCity"
+            }
+          },
+          {
+            "in": "query",
+            "name": "basketId",
+            "description": "Id корзины (если не передан токен пользователя)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pickpoint",
+            "description": "ID пикпоинта для доставки",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Получение способа доставки по id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "price": {
+                      "type": "number",
+                      "example": 300
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/": {
+      "get": {
+        "summary": "Список способов оплаты",
+        "tags": ["eshop"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "delivery",
+            "required": true,
+            "description": "Id службы доставки",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Получение дступных способов оплаты.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/": {
+      "get": {
+        "summary": "Список заказов пользователя",
+        "tags": ["eshop"],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список заказов",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Orders"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["eshop"],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "summary": "Создание заказа",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-basket-id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "comment, promocode, pickpointId - Необязательные поля.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Возвращает номер заказа и ссылку на оплату.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "summary": "Получить заказ по id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "tags": ["eshop"],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает состав заказа",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderFull"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/": {
+      "get": {
+        "summary": "Получить корзину",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["eshop"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-basket-id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список товаров в корзине",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Basket"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Кладёт товар в корзину (пустой запрос создаёт новую корзину)",
+        "tags": ["eshop"],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-city",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/XCity"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-basket-id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BasketRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ок",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Basket"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка"
+          }
+        }
+      },
+      "put": {
+        "summary": "Обновить товар в корзине",
+        "tags": ["eshop"],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-basket-id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-city",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/XCity"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BasketRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Возвращает список товаров в корзине",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Basket"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка"
+          },
+          "404": {
+            "description": "Корзина не найдена"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Удаляет товар из корзины",
+        "tags": ["eshop"],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-basket-id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BasketRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ок",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Basket"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка"
+          }
+        }
+      }
+    },
+    "/favorites/": {
+      "get": {
+        "summary": "Получить избранное (для зарег пользователя достаточно X-token)",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["favs"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "query",
+            "name": "items[]",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список товаров в избранном",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Кладёт товар в избранное (для зарег пользователя)",
+        "tags": ["favs"],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "example": 49144
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ок",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка"
+          },
+          "403": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Удаляет товар из избранного (для зарег)",
+        "tags": ["favs"],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "example": 49144
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ок",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/indexblocks/": {
+      "get": {
+        "summary": "Получить список блоков для главной страницы",
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список блоков для главной. Для каждого блока приходят параметры type - для определения шаблона, method - определяет метод, который надо вызываьт. param - параметр, который передавать в метод. Пример GET /{method}/{param}",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndexBlocksList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/indexblocks/{category}": {
+      "get": {
+        "summary": "Получить список блоков для выбранной категории.",
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "path",
+            "name": "category",
+            "required": true,
+            "description": "Символный код категории (code)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список блоков раздела. Для каждого блока приходят параметры type - для определения шаблона, method - определяет метод, который надо вызываьт. param - параметр, который передавать в метод. Пример GET /{method}/{param}",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndexBlocksList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/howto/": {
+      "get": {
+        "summary": "Получить список блоков howto для главной страницы",
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает все блоки howto для главной страницы",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HowTo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productlist/{code}": {
+      "get": {
+        "tags": ["catalog"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-city",
+            "schema": {
+              "$ref": "#/components/schemas/XCity"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "description": "Все последующие параметры предопределены в админке для выбранного списка. Так как они наследуются от метода /products, который внутри метода /productlist , то если их передаваь, то они будут переопределять насройки, заданные в админке.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Параметры page и perPage можно использовать для пагинации списка.",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "in": "query",
+            "name": "iblock",
+            "schema": {
+              "$ref": "#/components/schemas/Iblock"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dealer[]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortOrder",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object"
+            },
+            "description": "Передаём объект { key: value }. Key и Value берём из значение, которые возвращает filter.\nValue может быть: (1) строкой, если фильтрация по 1 параметру, (2) массивом из 2 элементв для диапазона по цене и (3) массивом элементов, если фильтрация по несколькоим параметрам. делаеть 2 и 3 сваггер не умеет.\nПример сериализованной строки: filter[price][0]=0&filter[price][1]=1000&filter[SIZE]=XL\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список товаро",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/iblocks/": {
+      "get": {
+        "summary": "Получить инфоблоков каталога",
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список инфоблокв",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string",
+                        "example": "accessories"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Аксессуары для автомобиля"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscribe/": {
+      "post": {
+        "summary": "Подписаться на рассылку",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["user"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Подписывает пользователя на рассылку, возвращает id записи в BMW CRM для заполнения данных ФИО, телефон, etc...",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Subscribe_notAuth"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscribe/{id}": {
+      "put": {
+        "summary": "Обновляет данные подписки в BMW CRM по id, возвращаемом в методе /subscribe/",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["user"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "firstName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "lastName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "phone",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "city",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Обновляет данные подписки пользователя",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscribePut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Не все данные переданы",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscribePutError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/viewed_product/": {
+      "get": {
+        "summary": "Просмотренные товары",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "tags": ["favs"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "query",
+            "name": "id_arr[]",
+            "description": "массив id товаров",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает список недавно просмотренных товаров",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/viewed_product/{id}": {
+      "post": {
+        "summary": "Сохраняет в профиле зарегистрированного пользователя недавно просмотренный товар",
+        "tags": ["favs"],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID просмотренного товара",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Сохраняет просмотренный товар",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/popularqueries/": {
+      "get": {
+        "summary": "Список популярных запросов",
+        "tags": ["static"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-site-id",
+            "schema": {
+              "$ref": "#/components/schemas/Site"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает массив популярных поисковых запросов",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "Колеса звездочка"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorObject"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthErrorObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "token": {
+        "type": "apiKey",
+        "name": "X-token",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "int64",
+            "example": 1
+          },
+          "text": {
+            "type": "string",
+            "example": "Подписка на новости"
+          },
+          "value": {
+            "type": "boolean",
+            "default": true,
+            "enum": [true, false]
+          }
+        }
+      },
+      "Notifications": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Notification"
+        }
+      },
+      "UserData": {
+        "type": "object",
+        "properties": {
+          "salutation": {
+            "type": "string",
+            "enum": ["M", "F"],
+            "default": "M"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Иван"
+          },
+          "secondName": {
+            "type": "string",
+            "example": "Иванов"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+79261234567"
+          },
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "city": {
+            "type": "string",
+            "example": "Москва"
+          },
+          "street": {
+            "type": "string",
+            "example": "Ленина"
+          },
+          "house": {
+            "type": "string",
+            "example": "1A"
+          },
+          "flat": {
+            "type": "string",
+            "example": "1"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "secondName": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      },
+      "password": {
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "format": "password"
+          },
+          "newPassword": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number",
+            "example": 101
+          },
+          "token": {
+            "type": "string",
+            "example": "bc5d3f602bc28a1bca6c14f8f0428cc5"
+          }
+        }
+      },
+      "AuthObject": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "format": "password"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      },
+      "Site": {
+        "type": "string",
+        "enum": ["s1", "mn", "mr"],
+        "default": "s1"
+      },
+      "Iblock": {
+        "type": "string",
+        "enum": ["lifestyle", "accessories", "wheels"]
+      },
+      "Banner": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Коллекция BMW Iconic Montblanc."
+          },
+          "buttonText": {
+            "type": "string",
+            "example": "Перейти к коллекции"
+          },
+          "buttonLink": {
+            "type": "string",
+            "example": "/news/1"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://api.bmwshop.hmns.ru/uploda/images/1.jpg"
+          },
+          "text": {
+            "type": "string",
+            "example": "The BMW Sports and BMW Lifestyle collection of clothing and accessories will allow you to look your best on and off the road. Available to purchase directly through your local BMW Centre."
+          },
+          "intro": {
+            "type": "string",
+            "example": "#lifestyle"
+          },
+          "color": {
+            "type": "string",
+            "example": "#ffffff"
+          },
+          "linkColor": {
+            "type": "string",
+            "example": "#ffffff"
+          },
+          "linkHoverColor": {
+            "type": "string",
+            "example": "#ffffff"
+          },
+          "gradient": {
+            "type": "string",
+            "enum": ["off", "light", "dark"]
+          },
+          "mobileImage": {
+            "type": "string",
+            "example": "https://api.bmwshop.hmns.ru/uploda/images/1.jpg"
+          },
+          "anchor": {
+            "type": "string"
+          },
+          "filter": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          }
+        }
+      },
+      "Banners": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Banner"
+        }
+      },
+      "BannerGroup": {
+        "type": "object",
+        "properties": {
+          "group": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Banners"
+            }
+          }
+        }
+      },
+      "BannerGroups": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/BannerGroup"
+        }
+      },
+      "Page": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "slug": {
+            "type": "string",
+            "example": "dostavka"
+          },
+          "name": {
+            "type": "string",
+            "example": "Доставка"
+          },
+          "title": {
+            "type": "string",
+            "example": "Доставка"
+          },
+          "h1": {
+            "type": "string",
+            "example": "Доставка"
+          },
+          "description": {
+            "type": "string",
+            "example": "Доставка магазина BMW"
+          },
+          "content": {
+            "type": "object",
+            "properties": {
+              "time": {
+                "type": "number",
+                "example": "1588844874382"
+              },
+              "blocks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "header"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "text": {
+                          "type": "string",
+                          "example": "текст"
+                        },
+                        "content": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "example": "Обхват головы"
+                            }
+                          }
+                        },
+                        "level": {
+                          "type": "number",
+                          "enum": [1, 2, 3, 4, 5, 6]
+                        },
+                        "style": {
+                          "type": "string",
+                          "enum": ["ordered", "unordered"]
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "service": {
+                          "type": "string",
+                          "enum": ["youtube", "vimeo"]
+                        },
+                        "source": {
+                          "type": "string",
+                          "example": "https://www.youtube.com/watch?v=VxXgvHnjvcE"
+                        },
+                        "embed": {
+                          "type": "string",
+                          "example": "https://www.youtube.com/embed/VxXgvHnjvcE"
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "height": {
+                          "type": "number"
+                        },
+                        "anchor": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "file": {
+                          "type": "object",
+                          "properties": {
+                            "url": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "caption": {
+                          "type": "boolean"
+                        },
+                        "withBorder": {
+                          "type": "boolean"
+                        },
+                        "stretched": {
+                          "type": "boolean"
+                        },
+                        "withBackground": {
+                          "type": "boolean"
+                        },
+                        "images": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": "/upload/iblock_content/0d1/0d177b181e179a4582a15350d82e6f53.jpg"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PageShort": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "slug": {
+            "type": "string",
+            "example": "dostavka"
+          },
+          "name": {
+            "type": "string",
+            "example": "Доставка"
+          }
+        }
+      },
+      "Pages": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PageShort"
+            }
+          }
+        }
+      },
+      "NewsItemShort": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-07-21T17:32:28Z"
+          },
+          "views": {
+            "type": "number",
+            "format": "int"
+          },
+          "name": {
+            "type": "string",
+            "example": "Доставка по ночам бесплатно"
+          },
+          "text": {
+            "type": "string",
+            "example": "Краткое описание новости"
+          },
+          "previewImage": {
+            "type": "string",
+            "example": "http://api.bmwshop.hmns.ru/uploads/images/pic.jpg"
+          }
+        }
+      },
+      "News": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NewsItemShort"
+            }
+          },
+          "pages": {
+            "type": "number",
+            "format": "int64"
+          },
+          "total": {
+            "type": "number",
+            "format": "int64"
+          },
+          "perPage": {
+            "type": "number",
+            "format": "int64"
+          },
+          "page": {
+            "type": "number",
+            "format": "int64"
+          }
+        }
+      },
+      "NewsItemFull": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Заголовок новости"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-07-21T17:32:28Z"
+          },
+          "views": {
+            "type": "number",
+            "format": "int"
+          },
+          "title": {
+            "type": "string",
+            "example": "Заголовок для тега title"
+          },
+          "h1": {
+            "type": "string",
+            "example": "Доставка"
+          },
+          "description": {
+            "type": "string",
+            "example": "meta description Доставка магазина BMW"
+          },
+          "fullImage": {
+            "type": "string",
+            "example": "http://api.bmwshop.hmns.ru/path/to/image.jpg"
+          },
+          "content": {
+            "$ref": "#/components/schemas/Page/properties/content"
+          }
+        }
+      },
+      "OfferParameter": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "size"
+          },
+          "name": {
+            "type": "string",
+            "example": "размер"
+          },
+          "value": {
+            "type": "string",
+            "example": "XL"
+          }
+        }
+      },
+      "HandbookList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Handbook"
+        }
+      },
+      "Handbook": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "header_phone"
+          },
+          "value": {
+            "type": "string",
+            "example": "+7 (909) 345-67-87"
+          }
+        }
+      },
+      "Store": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 216
+          },
+          "location": {
+            "type": "string",
+            "example": "0000509929"
+          },
+          "city": {
+            "type": "string",
+            "example": "Москва"
+          },
+          "lat": {
+            "type": "number",
+            "example": 59.00509929
+          },
+          "lng": {
+            "type": "number",
+            "example": 31.50992998
+          },
+          "name": {
+            "example": "КЛЮЧАВТО СТВ",
+            "type": "string"
+          },
+          "address": {
+            "type": "string",
+            "example": "Ставрополь"
+          },
+          "quantity": {
+            "example": 1,
+            "type": "number"
+          },
+          "worktime": {
+            "example": "17.00-19.00",
+            "type": "string"
+          },
+          "phone": {
+            "example": "+7 926 552-55-55",
+            "type": "string"
+          },
+          "externalId": {
+            "type": "number",
+            "example": 10224
+          }
+        }
+      },
+      "Offer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "example": 21049
+            }
+          },
+          "isDiscount": {
+            "type": "boolean"
+          },
+          "oldPrice": {
+            "type": "number",
+            "example": 0
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "example": 440798.11
+          },
+          "vendorCode": {
+            "type": "string",
+            "example": 80142411033
+          },
+          "quantity": {
+            "type": "number",
+            "example": 1
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferParameter"
+            }
+          },
+          "store": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Store"
+            }
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 21048
+          },
+          "name": {
+            "type": "string",
+            "example": "Куртка BMW М мужская"
+          },
+          "iblock": {
+            "type": "string",
+            "example": "lifestyle"
+          },
+          "category": {
+            "type": "string",
+            "example": "odezhda_i_obuv"
+          },
+          "categoryName": {
+            "type": "string",
+            "example": "Система Travel & Comfort"
+          },
+          "slug": {
+            "type": "string",
+            "example": "kurtka_bmw_m_muzhskaya"
+          },
+          "detailPageUrl": {
+            "type": "string",
+            "example": "/catalog/wheels/komplekty_letnikh_koles/cross_spoke_636_4"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 0
+          },
+          "oldPrice": {
+            "type": "number",
+            "example": 0
+          },
+          "price": {
+            "type": "number",
+            "example": 10000.1
+          },
+          "isNew": {
+            "type": "boolean"
+          },
+          "isDiscount": {
+            "type": "boolean"
+          },
+          "isHit": {
+            "type": "boolean"
+          },
+          "label": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Акция"
+              },
+              "color": {
+                "type": "string",
+                "example": "#ffffff"
+              }
+            }
+          },
+          "complect": {
+            "type": "boolean"
+          },
+          "car_series": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "F87"
+            }
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "http://api.bmwshop.hmns.ru/path/to/image/1.jpg"
+            }
+          },
+          "offers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "example": 21049
+                  }
+                },
+                "isDiscount": {
+                  "type": "boolean"
+                },
+                "oldPrice": {
+                  "type": "number",
+                  "example": 0
+                },
+                "price": {
+                  "type": "number",
+                  "format": "float",
+                  "example": 440798.11
+                },
+                "vendorCode": {
+                  "type": "string",
+                  "example": 80142411033
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 1
+                },
+                "parameters": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OfferParameter"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryInProduct": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Майки и футболки"
+          },
+          "slug": {
+            "type": "string",
+            "example": "maiki_i_futbolki"
+          },
+          "id": {
+            "type": "number",
+            "format": "int64"
+          },
+          "parentId": {
+            "type": "number",
+            "format": "int64"
+          },
+          "level": {
+            "type": "number",
+            "format": "int64"
+          }
+        }
+      },
+      "Products": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "total": {
+            "type": "number",
+            "example": 100
+          },
+          "perPage": {
+            "type": "number",
+            "example": 25
+          },
+          "pages": {
+            "type": "number",
+            "example": 4
+          },
+          "page": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "ProductFull": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 21048
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryInProduct"
+            }
+          },
+          "iblockName": {
+            "type": "string",
+            "example": "Аксессуары"
+          },
+          "iblockCode": {
+            "type": "string",
+            "example": "accessories"
+          },
+          "detailPageUrl": {
+            "type": "string",
+            "example": "/wheels/komplekty_letnikh_koles/cross_spoke_636_4"
+          },
+          "name": {
+            "type": "string",
+            "example": "Куртка BMW М мужская"
+          },
+          "slug": {
+            "type": "string",
+            "example": "kurtka_bmw_m_muzhskaya"
+          },
+          "description": {
+            "type": "string",
+            "example": "Эффектная футболка болельщика. С броским принтом BMW Motorsport. Круглый вырез горловины. Мягкая светоотражающая тесьма  по вороту в дизайне BMW M. Женский вариант слегка притален. Материал: 96 % хлопок, 4 % эластан."
+          },
+          "isNew": {
+            "type": "boolean"
+          },
+          "isDiscount": {
+            "type": "boolean"
+          },
+          "isHit": {
+            "type": "boolean"
+          },
+          "wheelIcons": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Шины с датчиком давления"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Шины с датчиком давления для контроля состояния шин"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "http://api.bmwshop.hmns.ru/path/to/image/1.jpg"
+                }
+              }
+            }
+          },
+          "delivery": {
+            "type": "string",
+            "example": "Срок доставки 3 дня"
+          },
+          "sizesTable": {
+            "type": "string",
+            "example": "/pages/hat-sizes"
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OfferParameter"
+            }
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "http://api.bmwshop.hmns.ru/path/to/image/1.jpg"
+            }
+          },
+          "offers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Offer"
+            }
+          },
+          "relatedItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "slug": {
+            "type": "string",
+            "example": "kurtki_i_vetrovki"
+          },
+          "name": {
+            "type": "string",
+            "example": "Куртки и ветровки"
+          },
+          "image": {
+            "type": "string",
+            "example": "http://api.bmwshop.hmns.ru/path/to/image/1.jpg"
+          },
+          "countElements": {
+            "type": "number"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "http://api.bmwshop.hmns.ru/path/to/image/1.jpg"
+                },
+                "slug": {
+                  "type": "string",
+                  "example": "kurtki_i_vetrovki"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Куртки и ветровки"
+                },
+                "countElements": {
+                  "type": "number"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Categories": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Category"
+            }
+          }
+        }
+      },
+      "FilterPrice": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "example": "CATALOG_PRICE_1"
+          },
+          "title": {
+            "type": "string",
+            "example": "Цена"
+          },
+          "type": {
+            "type": "string",
+            "example": "R"
+          },
+          "items": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number",
+                "example": 0
+              },
+              "max": {
+                "type": "number",
+                "example": 100000
+              }
+            }
+          }
+        }
+      },
+      "Filter": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FilterItem"
+            }
+          },
+          "prices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FilterPrice"
+            }
+          }
+        }
+      },
+      "FilterItem": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "example": "FILTER_CODE_1"
+          },
+          "title": {
+            "type": "string",
+            "example": "Размер"
+          },
+          "type": {
+            "type": "string",
+            "example": "L"
+          },
+          "displayType": {
+            "type": "string",
+            "example": "P"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "example": "BMW Golfsports"
+                },
+                "count": {
+                  "type": "number",
+                  "example": 24
+                },
+                "CONTROL_ID": {
+                  "type": "string",
+                  "example": "_148_1983483785"
+                },
+                "selected": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "CartItemPost": {
+        "type": "object",
+        "properties": {
+          "offerId": {
+            "type": "number"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "basketId": {
+            "type": "string",
+            "description": "Если корзина уже есть"
+          }
+        }
+      },
+      "CartItemPostActual": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "id оффера"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "basketId": {
+            "type": "string",
+            "description": "Если корзина уже есть"
+          }
+        }
+      },
+      "BasketItem": {
+        "type": "object",
+        "properties": {
+          "offerId": {
+            "type": "number",
+            "description": "ID торгового предложения"
+          },
+          "name": {
+            "type": "string",
+            "description": "Имя торгового предложения"
+          },
+          "vendorCode": {
+            "type": "string",
+            "description": "Артикул"
+          },
+          "amount": {
+            "type": "number",
+            "description": "количество в корзине"
+          },
+          "price": {
+            "type": "number",
+            "description": "цена"
+          },
+          "oldPrice": {
+            "type": "number",
+            "description": "Старая цена (до скидки)"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "https://bmwshopapi.hmns.ru/upload/iblock/7c9/7c960a3475dffc1478e26b2fe6d9417d.jpg"
+            }
+          },
+          "iblock": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "basket_id": {
+            "type": "integer"
+          },
+          "discount": {
+            "type": "object",
+            "properties": {
+              "discount_id": {
+                "type": "integer",
+                "example": 12
+              },
+              "coupon_id": {
+                "type": "string",
+                "example": "SL-X5LX1-T0NBS20"
+              },
+              "apply": {
+                "type": "string",
+                "example": "Y"
+              },
+              "descr": {
+                "type": "string",
+                "example": "скидка 30% (597 руб.)"
+              },
+              "fullName": {
+                "type": "string",
+                "example": "Скидка 30% на Lifestyle"
+              },
+              "percent": {
+                "type": "integer",
+                "example": 30
+              }
+            }
+          }
+        }
+      },
+      "Basket": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BasketItem"
+            }
+          },
+          "totalPrice": {
+            "type": "number"
+          },
+          "totalAmount": {
+            "type": "number"
+          },
+          "basketId": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "iblock": {
+            "type": "string"
+          },
+          "totalOldPrice": {
+            "type": "integer"
+          },
+          "promocodeData": {
+            "type": "object",
+            "properties": {
+              "coupon": {
+                "type": "string",
+                "example": "SL-X5LX1-T0NBS20"
+              },
+              "description": {
+                "type": "string",
+                "example": "Скидка 30% на Lifestyle"
+              }
+            }
+          }
+        }
+      },
+      "PersonalData": {
+        "type": "object",
+        "properties": {
+          "salutation": {
+            "type": "string",
+            "enum": ["M", "F"]
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "DeliveryAddress": {
+        "properties": {
+          "city": {
+            "type": "string",
+            "example": "Москва"
+          },
+          "street": {
+            "type": "string",
+            "example": "Ленина"
+          },
+          "house": {
+            "type": "string",
+            "example": "1A"
+          },
+          "flat": {
+            "type": "string",
+            "example": "1"
+          }
+        }
+      },
+      "OrderRequest": {
+        "type": "object",
+        "properties": {
+          "personalData": {
+            "type": "object",
+            "$ref": "#/components/schemas/PersonalData"
+          },
+          "delivery": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "object",
+                "$ref": "#/components/schemas/DeliveryAddress"
+              },
+              "comment": {
+                "type": "string",
+                "example": "Необязательно"
+              },
+              "deliveryId": {
+                "type": "number"
+              },
+              "pickpointId": {
+                "type": "string"
+              },
+              "location": {
+                "type": "string",
+                "description": "Код города из /delivery/locations"
+              }
+            }
+          },
+          "mobileFitting": {
+            "type": "boolean"
+          },
+          "dealerInstallation": {
+            "type": "boolean"
+          },
+          "paymentId": {
+            "type": "number"
+          },
+          "promocode": {
+            "type": "string",
+            "example": "SL-T7D5P-M12SJIC"
+          }
+        }
+      },
+      "OrderResponse": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "number"
+          },
+          "paylink": {
+            "type": "string",
+            "description": "Ссылка на которую надо перенаправить пользователя для оплаты"
+          },
+          "userId": {
+            "type": "integer"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "Location": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Москва"
+          },
+          "code": {
+            "type": "string",
+            "example": "0000073738"
+          },
+          "region": {
+            "type": "string",
+            "example": "Москва"
+          },
+          "highlight": {
+            "type": "boolean"
+          },
+          "lat": {
+            "type": "number"
+          },
+          "lon": {
+            "type": "number"
+          }
+        }
+      },
+      "Locations": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Location"
+        }
+      },
+      "Pickpoint": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "671S"
+          },
+          "city": {
+            "type": "string",
+            "example": "Москва"
+          },
+          "title": {
+            "type": "string",
+            "example": "26-ти Бакинских Комиссаров ул, д. 14"
+          },
+          "type": {
+            "type": "string",
+            "example": "ПВП"
+          },
+          "lat": {
+            "type": "number",
+            "example": 55.661419
+          },
+          "lot": {
+            "type": "number",
+            "example": 37.487255
+          },
+          "addr": {
+            "type": "string",
+            "example": "119571, Москва, 26-ти Бакинских Комиссаров ул, д. 14"
+          }
+        }
+      },
+      "DeliveryService": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Москва"
+                },
+                "code": {
+                  "type": "string",
+                  "example": "0000073738"
+                },
+                "lat": {
+                  "type": "number",
+                  "example": 55.754047
+                },
+                "lon": {
+                  "type": "number",
+                  "example": 37.620405
+                }
+              }
+            }
+          },
+          "pickpoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Pickpoint"
+            }
+          }
+        }
+      },
+      "DeliveryServices": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/DeliveryService"
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "number"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-07-21T17:32:28Z"
+          },
+          "statue": {
+            "type": "string",
+            "example": "Принят"
+          },
+          "sum": {
+            "type": "number"
+          },
+          "urlPay": {
+            "type": "string"
+          }
+        }
+      },
+      "OrderFull": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "offerId": {
+                  "type": "number",
+                  "description": "ID торгового предложения"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Имя торгового предложения"
+                },
+                "vendorCode": {
+                  "type": "string",
+                  "description": "Артикул"
+                },
+                "amount": {
+                  "type": "number",
+                  "description": "количество в корзине"
+                },
+                "price": {
+                  "type": "number",
+                  "description": "цена"
+                },
+                "image": {
+                  "type": "string",
+                  "description": "превьюха товара"
+                },
+                "iblock": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "number": {
+            "type": "number"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-07-21T17:32:28Z"
+          },
+          "statue": {
+            "type": "string",
+            "example": "Принят"
+          },
+          "sum": {
+            "type": "number"
+          },
+          "urlPay": {
+            "type": "string"
+          }
+        }
+      },
+      "Orders": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Order"
+        }
+      },
+      "BasketRequest": {
+        "type": "object",
+        "properties": {
+          "offerId": {
+            "type": "number",
+            "example": 36161
+          },
+          "amount": {
+            "type": "number",
+            "example": 1
+          },
+          "promocode": {
+            "type": "string",
+            "example": "SL-T7D5P-M12SJIC"
+          }
+        }
+      },
+      "ErrorObject": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 400
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/OneError"
+                },
+                {
+                  "$ref": "#/components/schemas/OneFieldError"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "OneError": {
+        "type": "string",
+        "example": "Заполните обязательные поля"
+      },
+      "OneFieldError": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "example": "phone"
+          },
+          "error": {
+            "type": "string",
+            "example": "Заполните поле Телефон"
+          }
+        }
+      },
+      "FourOFourObject": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 404
+          },
+          "message": {
+            "type": "string",
+            "example": "Страница не найдена"
+          }
+        }
+      },
+      "AuthErrorObject": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 403
+          },
+          "message": {
+            "type": "string",
+            "example": "Неверные данные для входа"
+          }
+        }
+      },
+      "SuccessObject": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "Menus": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Menu"
+        }
+      },
+      "Menu": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "topMenu"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MenuItem"
+            }
+          }
+        }
+      },
+      "MenuItem": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Аксессуары"
+          },
+          "url": {
+            "type": "string",
+            "example": "/catalog/accessories"
+          },
+          "style": {
+            "type": "string",
+            "enum": ["default", "header", "link"]
+          },
+          "filter": {
+            "type": "string"
+          },
+          "anchor": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "openInNewWindow": {
+            "type": "boolean"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MenuSubItem"
+            }
+          }
+        }
+      },
+      "MenuSubItem": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Дворники"
+          },
+          "url": {
+            "type": "string",
+            "example": "/catalog/accessories/dvorniki"
+          },
+          "style": {
+            "type": "string",
+            "example": "header"
+          },
+          "filter": {
+            "type": "string",
+            "example": "filter[PROPERTY_IS_NEW_VALUE]=Y&filter[CATALOG_PRICE_1][]=10000"
+          },
+          "anchor": {
+            "type": "string",
+            "example": "delivery"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MenuSubItem"
+            }
+          }
+        }
+      },
+      "XCity": {
+        "type": "string",
+        "description": "CODE города из /api/delivery/locations/. Если не передан в товарах, то бэк работает с москвой."
+      },
+      "Car": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 45678
+          },
+          "series": {
+            "type": "string",
+            "example": "X5M"
+          },
+          "body": {
+            "type": "string",
+            "example": "F85 X5M с 03/15"
+          },
+          "model": {
+            "type": "string",
+            "example": "X5M"
+          },
+          "code": {
+            "type": "string",
+            "example": "F85"
+          },
+          "vin": {
+            "type": "string",
+            "example": "LXZ232444233423423423"
+          },
+          "dealer": {
+            "type": "object",
+            "$ref": "#/components/schemas/Store"
+          },
+          "favorite": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "CarRequest": {
+        "type": "object",
+        "properties": {
+          "series": {
+            "type": "string",
+            "example": "X5M"
+          },
+          "body": {
+            "type": "string",
+            "example": "F85 X5M с 03/15"
+          },
+          "model": {
+            "type": "string",
+            "example": "X5M"
+          },
+          "code": {
+            "type": "string",
+            "example": "F85"
+          },
+          "vin": {
+            "type": "string",
+            "example": "LXZ232444233423423423"
+          },
+          "dealer": {
+            "type": "number",
+            "example": 187
+          },
+          "favorite": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "Cars": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Car"
+        }
+      },
+      "Subscribe": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "description": {
+            "type": "string",
+            "example": "Вы успешно подписаны на рассылку"
+          }
+        }
+      },
+      "SubscribePut": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "description": {
+            "type": "string",
+            "example": "Данные подписки успешно обновлены"
+          }
+        }
+      },
+      "SubscribePutError": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 400
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "example": "city"
+                },
+                "error": {
+                  "type": "string",
+                  "example": "Необходимо заполнить «Город»"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Subscribe_notAuth": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "id": {
+            "type": "integer",
+            "example": 3509
+          }
+        }
+      },
+      "IndexBlocksList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/IndexBlock"
+        }
+      },
+      "IndexBlock": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["hero", "slider", "banners", "hits", "categories", "howto"]
+          },
+          "method": {
+            "type": "string",
+            "enum": ["productlist", "banners", "howto", "categories"]
+          },
+          "param": {
+            "type": "string",
+            "example": "lifestyle"
+          }
+        }
+      },
+      "HowTo": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "example": "Как сделать заказ?"
+            },
+            "text": {
+              "type": "string",
+              "example": "обавьте в корзину товары. Перейдите в корзину, оставьте контактные данные и выберете дилерский центр для получения заказа."
+            },
+            "link": {
+              "type": "string",
+              "example": "Подбробнее"
+            },
+            "url": {
+              "type": "string",
+              "example": "/url"
+            },
+            "anchor": {
+              "type": "string",
+              "example": "delivery"
+            }
+          }
+        }
+      },
+      "ProductList": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Заголовок блока товаров"
+          },
+          "link": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Новинки Lifestyle"
+              },
+              "url": {
+                "type": "string",
+                "example": "/catalogue/lifestyle/all"
+              },
+              "filter": {
+                "type": "string",
+                "example": "filter[PROPERTY_IS_NEW_VALUE]=Да"
+              },
+              "slug": {
+                "type": "string",
+                "example": "odezhda_i_obuv",
+                "description": "Символьный код категории"
+              }
+            }
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "total": {
+            "type": "number",
+            "example": 100
+          },
+          "perPage": {
+            "type": "number",
+            "example": 25
+          },
+          "pages": {
+            "type": "number",
+            "example": 4
+          },
+          "page": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "Iblocks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "example": "accessories"
+            },
+            "name": {
+              "type": "string",
+              "example": "Аксессуары для автомобиля"
+            }
+          }
+        }
+      }
+    }
+  }
+}

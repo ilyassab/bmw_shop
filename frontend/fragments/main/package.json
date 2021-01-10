@@ -1,0 +1,17 @@
+{
+  "name": "@fragments/main",
+  "version": "0.91.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@atlantis-lab/layout": "^0.3.0",
+    "@fragments/catalog": "0.98.0",
+    "@fragments/category": "0.92.0",
+    "@fragments/how-to": "0.91.0",
+    "@fragments/promo": "0.92.0",
+    "@fragments/slider": "0.92.0",
+    "@fragments/slideshow": "0.98.0",
+    "react": "^16.13.1",
+    "react-intl": "5.3.2"
+  }
+}

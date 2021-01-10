@@ -1,0 +1,10 @@
+{
+  "name": "@ui/outside-click",
+  "version": "0.0.88",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-onclickoutside": "^6.9.0"
+  }
+}

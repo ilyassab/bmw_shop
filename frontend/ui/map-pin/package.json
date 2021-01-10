@@ -1,0 +1,13 @@
+{
+  "name": "@ui/map-pin",
+  "version": "0.0.31",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@emotion/styled": "^10.0.27",
+    "@ui/condition": "0.91.0",
+    "@ui/icons": "0.97.0",
+    "@ui/transition": "0.0.76",
+    "react": "^16.13.1"
+  }
+}
